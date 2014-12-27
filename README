@@ -84,4 +84,23 @@ STATISTICS:
  on the specified subject.
 
 
+HASHING ALGORITHM:
+ Unlike X3, we will have multiple formats for password hashings to give the end user
+ a choice. The only choice we don't condone is plain text.
 
+ Some of the hashing formats available in X4 will include:
+   - SHA512          - SHA256
+   - SHA1            - MD5
+
+ For X3 users, migrating will be easy. Upon setting up X4's configuration file, make
+ sure you include that you are moving from X3 so passwords will be converted upon
+ user login to the new algorithm.
+
+ X3's legacy hashing algorithm will be obsolete with the release of X4. You will NOT
+ be able to convert backwards in the future. Upon login, users will have their passwords
+ converted to one of the above algorithm's including a new type variable included in
+ the salted password string.
+
+
+
+ 
