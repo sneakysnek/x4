@@ -63,7 +63,7 @@ DATA STORAGE AND USAGE:
  The plan is to have a more universal system with a wider range of support which
  will include (but not limited to):
    - LDAP
-   - SQL (MySQL, SQLite, etc.)
+   - SQL (MySQL, PostgreSQL, SQLite, etc.)
    - Hardfile (traditional X3 style)
    - XML
 
