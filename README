@@ -1,0 +1,29 @@
+       Welcome to X4, the next generation of IRC services
+
+X4 is built from the ground up with a brand new core design that is modular based and
+includes many changes that should be a high point in these fantastic services.
+
+
+New features include:
+   - A completely new engine for faster and smarter handling of events.
+   - A modular design to handle plug and play module support.
+   - Multiple password hashing formats.
+   - Multiple IRCd protocol support.
+   - Database interacting for hardfile, LDAP, MySQL, etc.
+   - Built in statistics system.
+   - Integration for websites/forums for universal logins.
+   - Dynamic command/help listings that show what you have access to.
+   - Out of date notifications.
+
+
+TESTING AND DEVELOPMENT:
+ In early stages of testing and development, we will be testing X4 on the following
+ operating Linux distributions:
+   - CentOS 6
+   - Ubuntu 14
+
+
+COMPATIBILITY:
+ This version of X services will support P10 natively with community support available
+ for TS5, TS6, and any other protocols contributed.
+
