@@ -63,8 +63,9 @@ DATA STORAGE AND USAGE:
  The plan is to have a more universal system with a wider range of support which
  will include (but not limited to):
    - LDAP
-   - SQL
-   - hardfile
+   - SQL (MySQL, SQLite, etc.)
+   - Hardfile (traditional X3 style)
+   - XML
 
  All the data is passed through the API for incoming and outgoing traffic control
  to prevent security issues.
