@@ -1,0 +1,7 @@
+Core:
+
+1) flexible config parser
+2) module subsystem
+3) logging subsystem
+4) event engine
+5) io loop engine (ties in with event engine)
