@@ -5,3 +5,4 @@ Core:
 3) logging subsystem
 4) event engine
 5) io loop engine (ties in with event engine)
+6) database subsystem to handle multiple options for database backend support
