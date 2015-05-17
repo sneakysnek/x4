@@ -1,0 +1,33 @@
+               Welcome to X4, the next generation of IRC services
+                Written by Andromeda (andromeda@cerberuslabs.ca)
+          ----------------------------------------------------------
+
+  To keep our coding clean, we ask that anyone who contributes code to please keep it within the
+  following parameters to ensure it looks like it was done with one hand. It makes it a lot
+  easier when working on code with large groups of people for easy understanding.
+
+
+  ~ Clean Code ~
+
+  Comments:
+    Please remember to always place comments where needed. Using proper C style comments, not
+    C++ or some varying slang mess.
+
+       /*
+        * This is an ACCEPTABLE multiline comment.
+        */
+
+       /* This is an ACCEPTABLE singleline comment. */
+
+   Variable Spacing:
+     ACCEPTABLE: Var1, Var2, Var3, Var4
+     NON-ACCEPTABLE: Var1,Var2,Var3,Var4
+     NON-ACCEPTABLE: Var1 , Var2 , Var3 , Var4
+
+     * Please use proper spacing.
+
+   Variable Definitions:
+     ACCEPTABLE: Var = something
+     NON-ACCEPTABLE: Var=something
+
+
