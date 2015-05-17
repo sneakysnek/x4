@@ -9,25 +9,49 @@
 
   ~ Clean Code ~
 
+  Indentation:
+    All indents should be spaced as 4. Not with tab (unless tab is set to equal 4 spaces)
+    For sanity purposes, the maximum amount of indented variables within a single opening
+    direction is ADVISED as 8. If exceeding 8 opening indents, it is highly recommended
+    to create a second function and call it.
+
   Comments:
     Please remember to always place comments where needed. Using proper C style comments, not
     C++ or some varying slang mess.
 
-       /*
-        * This is an ACCEPTABLE multiline comment.
-        */
+      /*
+       * This is an ACCEPTABLE multiline comment.
+       */
 
-       /* This is an ACCEPTABLE singleline comment. */
+      /* This is an ACCEPTABLE singleline comment. */
 
-   Variable Spacing:
-     ACCEPTABLE: Var1, Var2, Var3, Var4
-     NON-ACCEPTABLE: Var1,Var2,Var3,Var4
-     NON-ACCEPTABLE: Var1 , Var2 , Var3 , Var4
+  Variable Spacing:
+    ACCEPTABLE: Var1, Var2, Var3, Var4
+    NON-ACCEPTABLE: Var1,Var2,Var3,Var4
+    NON-ACCEPTABLE: Var1 , Var2 , Var3 , Var4
 
-     * Please use proper spacing.
+    * Please use proper spacing.
 
-   Variable Definitions:
-     ACCEPTABLE: Var = something
-     NON-ACCEPTABLE: Var=something
+  Variable Definitions:
+    ACCEPTABLE: Var = something
+    NON-ACCEPTABLE: Var=something
+
+
+  Variable Names:
+    Names should be simple, and relevant to the function of it's purpose. You should not be
+    naming a ChanServ module with funky/unrelated names that will cause the end-user
+    confusion while trying to modify the code. Remember, it is open source!
+
+  Line length:
+    Long lines should not exceed 72 characters under general conditions. Lines that are longer
+    should be continued on a second line and wrapped (including indent).
+
+  Opening Brackets:
+    Opening brackets should always be on a new line.
+    Example:
+      void function()
+      {
+          ...
+      }
 
 
