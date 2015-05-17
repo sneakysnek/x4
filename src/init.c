@@ -14,7 +14,7 @@
 void init()
 {
     signal(SIGKILL, init_sig_handler);
-    // Fork
+    /* Fork */
     if (!init_checkPid()) {
         pid_t pid = 0;
         init_fork(&pid);
@@ -22,9 +22,6 @@ void init()
         printf("Error: process already running.\n");
         exit(0);
     }
-    // Load conf
-    // Bind
-
 }
 
 /**
@@ -32,7 +29,7 @@ void init()
 * Called when kill signal is detected. Removes pid file and performs any needed cleanup
 */
 void init_sig_handler(int signal) {
-    // TODO: remove pid file
+    /* TODO: remove pid file */
 }
 
 /**
@@ -42,7 +39,7 @@ void init_sig_handler(int signal) {
 void init_createPid()
 {
     FILE *fp = NULL;
-    // Open a log file in write mode.
+    /* Open a log file in write mode. */
     fp = fopen ("x4.pid", "w+");
     fprintf(fp,"%i\n", (int)getpid());
     fflush(fp);
@@ -71,10 +68,10 @@ void init_fork(pid_t *pid)
 {
     pid_t sid = 0;
 
-    // Create child process
+    /* Create child process */
     *pid = (pid_t) fork();
 
-    // Fork failed
+    /* Fork failed */
     if (*pid < 0)
     {
         printf("Error: fork failed\n");
@@ -82,34 +79,34 @@ void init_fork(pid_t *pid)
         exit(1);
     }
 
-    // kIll parent process
+    /* kIll parent process */
     if (*pid > 0)
     {
         printf("Starting x4 in the background \n");
-        // return success in exit status
+        /* return success in exit status */
         exit(0);
     }
 
-    //unmask the file mode
+    /* unmask the file mode */
     umask(0);
-    //set new session
+    /* set new session */
     sid = setsid();
     if(sid < 0)
     {
-        // Return failure
+        /* Return failure */
         exit(1);
     }
 
-    // Close stdin. stdout and stderr
+    /* Close stdin. stdout and stderr */
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
 
-    // Create pid file
+    /* Create pid file */
     init_createPid();
 
     while(1) {
         sleep(1);
-        // TODO: add main daemon loop
+        /* TODO: add main daemon loop */
     }
 }
