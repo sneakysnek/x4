@@ -7,4 +7,6 @@ AM_LDFLAGS =
 bin_PROGRAMS = x4
 x4_SOURCES = main.c \
 	init.c \
-	init.h
+	init.h \
+	log.c  \
+	log.h

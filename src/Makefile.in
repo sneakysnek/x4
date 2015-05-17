@@ -90,7 +90,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_x4_OBJECTS = main.$(OBJEXT) init.$(OBJEXT)
+am_x4_OBJECTS = main.$(OBJEXT) init.$(OBJEXT) log.$(OBJEXT)
 x4_OBJECTS = $(am_x4_OBJECTS)
 x4_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -241,7 +241,9 @@ AM_CFLAGS =
 AM_LDFLAGS = 
 x4_SOURCES = main.c \
 	init.c \
-	init.h
+	init.h \
+	log.c  \
+	log.h
 
 all: all-am
 
@@ -331,6 +333,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/init.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 
 .c.o:

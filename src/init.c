@@ -6,17 +6,23 @@
 #include <string.h>
 #include <signal.h>
 #include "init.h"
+#include "log.h"
 
 /**
 * Function: init
 * Starts initialization process
 */
-void init()
+void init(int *fork)
 {
+    char *prefix = "core/init";
+    char *msg = "entering init";
+    log_stdout(&prefix,&msg,1);
     signal(SIGKILL, init_sig_handler);
     if (!init_checkPid()) {
         pid_t pid = 0;
-        init_fork(&pid);
+        if (*fork) {
+            init_fork(&pid);
+        }
     } else {
         printf("Error: process already running.\n");
         exit(0);
