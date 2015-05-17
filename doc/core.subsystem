@@ -3,4 +3,94 @@
           ----------------------------------------------------------
 
 
-** Work in progress
+  ~ The Core Subsystem ~
+
+    OVERVIEW:
+
+    The main core of X4 is broken down into sections, and intended to be quick, smart, and lightweight... not bloated
+    like commonly seen with IRC services. It's important to remember this when implementing changes or additions to
+    the source code.
+
+    This subsystem contains the following:
+
+           X4 Core
+              |- Config parser
+              |- Module Subsystem
+              |- Logging Subsystem
+              |- Event Engine
+              | \- IO Loop Engine
+              \- Database Subsystem
+
+   
+    CONFIG PARSER:
+
+    The configuration parser is intended to be based around a dynamic and flexible concept. Not only does the parser
+    read specific information, but handles variable information in a non-case sensitive fashion for ease of use.
+    The parser is also intended to look for 'smart variables' called for by individual modules rather than static
+    repeating loops.
+
+                     *** THIS INFORMATION IS SUBJECT TO CHANGE ***
+
+
+    MODULE SUBSYSTEM:
+
+    The module subsystem is a very complicated part of X4 that handles pretty much everything in terms of features,
+    interactivity, as well as custom and unique functions and abilities. The module system itself handles all
+    transactions between the core and the independant modules. It safeguards against outside tampering but allows
+    you to still use X4 the way you need. The module subsystem is one of the larger parts of X4 because of how much
+    data is passed through it.
+
+    Essentially, this subsystem works as follows when a module event is triggered:
+
+      Module (start) ---> Module Subsystem ---> Core ---> Event Engine ---> Module (eof)
+           |                    |                 |            |                |
+           |                    |                 |            |          Send notice of completion
+           |                    |                 |     Perform operation
+           |                    |          Forward command for use
+           |             Validate and parse command
+       Command received
+
+    At the time of this documentation... I will say that this may or may not be entirely accurate or finalized and
+    is highly likely to change accordingly. -- Andromeda
+
+                     *** THIS INFORMATION IS SUBJECT TO CHANGE ***
+
+
+    LOGGING SUBSYSTEM:
+
+    The logging subsystem is for handling all event types, subject to what is chosen in the configuration file.
+    This part of X4 is pretty straight forward. The logging system has two options, output various usage and
+    events to the log files, or debug mode, which will output the events in raw format on the screen.
+
+                     *** THIS INFORMATION IS SUBJECT TO CHANGE ***
+
+
+    EVENT ENGINE:
+
+    The event engine is the part of X4 that deals with all things related to events, such as responding to ping
+    and pong events from the server, as well as any other similar action.
+
+                     *** THIS INFORMATION IS SUBJECT TO CHANGE ***
+
+
+    IO LOOP ENGINE:
+
+    The input/output loop engine is for handling X4's connection to the server. Making sure it doesn't get
+    disconnected and sending the proper information while connected. This part of X4 will also monitor and
+    trigger events for the event engine, so technically is a subsystem of it. This system is also responsible
+    for sending the proper SIGTERM responses when a kill order is received or anything that is meant to break
+    the loop.
+
+                     *** THIS INFORMATION IS SUBJECT TO CHANGE ***
+
+
+    DATABASE SUBSYSTEM:
+
+    The database subsystem is responsible for handling the various types of databases that X4 supports including
+    LDAP, SQL, XML, and a legacy-style database file. This subsystem handles all read and write functions from
+    verifying that a user has the proper access to use a command or making sure a user is actually logged in, to
+    allowing a connected website to access the database and share login and access details. Due to the nature of
+    the design and to keep passwords protected, we do not support the usage of plain text passwords.
+
+                     *** THIS INFORMATION IS SUBJECT TO CHANGE ***
+
