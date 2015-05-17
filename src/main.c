@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include "init.h"
 
 int main(int argc, char* argv[])
 {
-	printf("X4\n");
+    init();
 	return 0;
 }
