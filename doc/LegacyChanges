@@ -1,0 +1,20 @@
+               Welcome to X4, the next generation of IRC services
+                Written by Andromeda (andromeda@cerberuslabs.ca)
+          ----------------------------------------------------------
+
+  ~ Changes from X3 ~
+
+    OVERVIEW:
+
+    This is a basic list and explaination of changes we have planned for X4 while migrating commands
+    from X3. This list will continue to grow and change with the more we put into development and
+    subject to change based on the needs and wants of the development team and it's sponsors.
+
+
+    CHANGES:
+
+    Languages - Unlike X3, X4 will be designed with other languages in mind so even if your community
+                doesn't know English, you can still use X4. By default, the language will be English.
+
+    Modules - X4 will be designed completely with modules in mind. You will be able to enable and
+              disable modules on the fly for ease of use.
