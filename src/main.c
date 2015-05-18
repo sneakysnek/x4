@@ -8,6 +8,7 @@ int main(int argc, char* argv[])
     char *prefix = "core/main";
     char *msg = "forking";
     log_stdout(&prefix,&msg,1);
+    log_file("test");
     init(&fork);
 
     while(1) {
