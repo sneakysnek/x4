@@ -14,9 +14,7 @@
 */
 void init(int *fork)
 {
-    char *prefix = "core/init";
-    char *msg = "entering init";
-    log_stdout(&prefix,&msg,1);
+    log_stdout("core/init","entering init",1);
     signal(SIGKILL, init_sig_handler);
     if (!init_checkPid()) {
         pid_t pid = 0;

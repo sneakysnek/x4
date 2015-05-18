@@ -4,11 +4,8 @@
 
 int main(int argc, char* argv[])
 {
-   int fork = 1;
-    char *prefix = "core/main";
-    char *msg = "forking";
-    log_stdout(&prefix,&msg,1);
-    log_file("test");
+    int fork = 1;
+    log_stdout("core/main","forking",1);
     init(&fork);
 
     while(1) {
