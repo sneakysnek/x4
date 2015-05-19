@@ -11,7 +11,7 @@
 
   Indentation:
     All indents should be spaced as 4. Not with tab (unless tab is set to equal 4 spaces)
-    For sanity purposes, the maximum amount of indented variables within a single opening
+    For sanity purposes, the maximum amount of indented lines within a single opening
     direction is ADVISED as 8. If exceeding 8 opening indents, it is highly recommended
     to create a second function and call it.
 
@@ -44,7 +44,10 @@
 
   Line length:
     Long lines should not exceed 72 characters under general conditions. Lines that are longer
-    should be continued on a second line and wrapped (including indent).
+    should be continued on a second line and wrapped (including indent). There should be an 8
+    character margin on all lines of code (including comments) not included within the 72
+    limit. Thus resulting in 72 + 8 = 80, the default length for viewing/editing set by most
+    SSH clients and terminals by default.
 
   Opening Brackets:
     Opening brackets should always be on a new line.
@@ -53,5 +56,6 @@
       {
           ...
       }
+
 
 
