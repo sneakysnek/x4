@@ -1,0 +1,77 @@
+#!/bin/sh
+#
+# Configuration script for X4
+#
+# Basic construct created by Andromeda
+#
+#######################################################
+
+exists() {
+    if [ -f $1 -o -d $1 -o -p $1 -o -c $1 -o -b $1 ] ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+load_cache() {
+    if [ -f ./config.cache -a -r ./config.cache -a ] ; then
+        echo "Using data from config.cache."
+        echo ""
+        ./config.cache
+        CAN_INSTALL = "yes"
+    else
+        CAN_INSTALL = "no"
+    fi
+}
+
+build_install() {
+    B_INSTALL_DIR = ""
+    B_INCLUDE = ""
+    B_LIBS = ""
+
+    if [ "$INSTALLDIR" != "" ] ; then
+        B_INSTALL_DIR = "--prefix=$INSTALLDIR"
+    fi
+}    
+
+export ok INPUT
+
+####
+
+ok = 0
+echo "What directory should we install X4?"
+while [ $ok -eq 0 ] ; do
+    echo "[$INSTALLDIR] "
+    if read INPUT ; then : ; else echo "" ; exit 1 ; fi
+    if [ ! "$INPUT"] ; then
+        INPUT = $INSTALLDIR
+    fi
+
+    if [ ! -d "$INPUT" ; then
+        if exists "$INPUT" ; then
+            echo "$INPUT is not a valid directory."
+        else
+            echo "$INPUT does not exist. Should we create it?"
+            echo [y] "
+            read YN
+            if ["$YN" != "n" ] ; then
+                if mkdir -p $INPUT ; then
+                    ok = 1
+                fi
+            fi
+        fi
+done
+
+B_INSTALLDIR = $INPUT
+echo ""
+
+####
+
+echo "Preparing to install..."
+cat <<EOT >./config.cache
+INSTALLDIR = "$B_INSTALL_DIR
+EOT
+echo "Done. Please continue with make to continue your installation."
+
+build_install
