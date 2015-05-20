@@ -9,4 +9,6 @@ x4_SOURCES = main.c \
 	init.c \
 	init.h \
 	log.c  \
-	log.h
+	log.h \
+	timers.c \
+	timers.h
