@@ -18,6 +18,6 @@ struct TimerInfo
 
 struct TimerInfo *timer_add(time_t timestamp, TimerCallback callback, void *state);
 void timer_del(struct TimerInfo *timer);
-struct TimerInfo * timer_next();
+struct TimerInfo *timer_next();
 
 #endif /* _timers_h */
