@@ -34,7 +34,7 @@ struct TimerInfo *timer_add(time_t timestamp, TimerCallback callback, void *stat
 
     for (ti = timers; ti; ti = ti->ti_next)
     {
-        if (ti->ti_timestamp >= newti->ti_timestamp)
+        if (ti->ti_timestamp > newti->ti_timestamp)
         {
             if (ti->ti_prev == NULL)
             {
