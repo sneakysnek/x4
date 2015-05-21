@@ -92,7 +92,8 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_x4_OBJECTS = main.$(OBJEXT) init.$(OBJEXT) log.$(OBJEXT) \
 	timers.$(OBJEXT)
-x4_OBJECTS = $(am_x4_OBJECTS)
+nodist_x4_OBJECTS = version.$(OBJEXT)
+x4_OBJECTS = $(am_x4_OBJECTS) $(nodist_x4_OBJECTS)
 x4_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -122,7 +123,7 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(x4_SOURCES)
+SOURCES = $(x4_SOURCES) $(nodist_x4_SOURCES)
 DIST_SOURCES = $(x4_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
@@ -246,8 +247,11 @@ x4_SOURCES = main.c \
 	log.c  \
 	log.h \
 	timers.c \
-	timers.h
+	timers.h \
+	version.h
 
+nodist_x4_SOURCES = version.c
+DISTCLEANFILES = version.c
 all: all-am
 
 .SUFFIXES:
@@ -339,6 +343,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timers.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/version.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -469,6 +474,7 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -558,6 +564,11 @@ uninstall-am: uninstall-binPROGRAMS
 	ps ps-am tags tags-am uninstall uninstall-am \
 	uninstall-binPROGRAMS
 
+
+.PHONY: version.c
+
+version.c: Makefile
+	${SHELL} ${srcdir}/version.c.SH ${top_srcdir}
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

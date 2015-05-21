@@ -11,4 +11,13 @@ x4_SOURCES = main.c \
 	log.c  \
 	log.h \
 	timers.c \
-	timers.h
+	timers.h \
+	version.h
+
+nodist_x4_SOURCES = version.c
+DISTCLEANFILES = version.c
+
+.PHONY: version.c
+
+version.c: Makefile
+	${SHELL} ${srcdir}/version.c.SH ${top_srcdir}
