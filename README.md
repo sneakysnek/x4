@@ -20,8 +20,9 @@
 # TESTING AND DEVELOPMENT:
 In early stages of testing and development, we will be testing X4 on the following operating Linux distributions:
 
-   - CentOS 6
-   - Ubuntu 14
+  - CentOS 6
+  - Ubuntu 14
+  - Ubuntu 15
 
 
 # COMPATIBILITY:
@@ -74,7 +75,7 @@ Some of the hashing formats available in X4 will include:
    - SHA1
    - MD5
 
-   
+
 For X3 users, migrating will be easy. Upon setting up X4's configuration file, make sure you include that you are moving from X3 so passwords will be converted upon user login to the new algorithm.
 
 X3's legacy hashing algorithm will be obsolete with the release of X4. You will **NOT** be able to convert backwards in the future. Upon login, users will have their passwords converted to one of the above algorithm's including a new type variable included in the salted password string.
