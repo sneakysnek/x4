@@ -3,6 +3,7 @@
 #include "init.h"
 #include "log.h"
 #include "timers.h"
+#include "config.h"
 
 int main(int argc, char* argv[])
 {
