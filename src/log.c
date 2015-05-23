@@ -34,25 +34,25 @@ int logFileCreated = 0;
 void log_file (char *message)
 {
     FILE *file;
- 
+
     if (!logFileCreated) {
         file = fopen(LOGFILE, "w");
-	logFileCreated = 1;
+        logFileCreated = 1;
     }
-    else		
-	file = fopen(LOGFILE, "a");
-		
+    else
+        file = fopen(LOGFILE, "a");
+
     if (file == NULL) {
-	if (logFileCreated)
-	    logFileCreated = 0;
-	    return;
+        if (logFileCreated)
+            logFileCreated = 0;
+            return;
     }
     else
     {
-	fputs(message, file);
-	(file);
+        fputs(message, file);
+        (file);
     }
- 
+
     if (file)
-	fclose(file);
+        fclose(file);
 }

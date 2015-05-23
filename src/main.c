@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include <unistd.h>
 #include "init.h"
 #include "log.h"
 #include "timers.h"

@@ -2,7 +2,7 @@
 #define _log_h
 #include <stdio.h>
 
-#define LOGFILE	"x4.log"
+#define LOGFILE    "x4.log"
 extern int logFileCreated;
 
 void log_file (char *message);
