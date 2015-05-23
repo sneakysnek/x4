@@ -72,6 +72,9 @@
 /* Version number of package */
 #undef VERSION
 
+/* Maximum number of network connections */
+#undef MAXCONNECTIONS
+
 /* Define to `int' if <sys/types.h> does not define. */
 #undef pid_t
 

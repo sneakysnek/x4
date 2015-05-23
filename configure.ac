@@ -50,5 +50,32 @@ if test x"$x4conf_cv_enable_warnings" = xyes; then
     CFLAGS="-Wall $CFLAGS"
 fi
 
+dnl --with-maxcon allows us to set the maximum connections
+x4conf_maxcon=`ulimit -Hn`
+if test x"$x4conf_maxcon" = xunlimited; then
+    x4conf_maxcon=`ulimit -Sn`
+fi
+x4conf_maxcon=`expr $x4conf_maxcon - 4`
+AC_MSG_CHECKING([max connections])
+AC_ARG_WITH([maxcon],
+[  --with-maxcon=maxcon    Maximum number of connections server will accept],
+[x4conf_cv_with_maxcon=$with_maxcon],
+[AC_CACHE_VAL(x4conf_cv_with_maxcon,
+[x4conf_cv_with_maxcon=$x4conf_maxcon])])
+
+if test x"$x4conf_cv_with_maxcon" = xyes -o x"$x4conf_cv_with_maxcon" = xno; then
+    if test "$x4conf_maxcon" -lt 32; then
+      AC_MSG_ERROR([Maximum connections (number of open files minus 4) must be at least 32.])
+    fi
+    x4conf_cv_with_maxcon=$x4conf_maxcon
+elif test "$x4conf_cv_with_maxcon" -lt 32; then
+    AC_MSG_ERROR([Maximum connections (--with-maxcon) must be at least 32.])
+fi
+
+AC_MSG_RESULT([$x4conf_cv_with_maxcon])
+
+AC_DEFINE_UNQUOTED(MAXCONNECTIONS, $x4conf_cv_with_maxcon,
+[Maximum number of network connections])
+
 AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT
