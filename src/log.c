@@ -50,7 +50,7 @@ void log_file (char *message)
     else
     {
         fputs(message, file);
-        (file);
+        fclose(file);
     }
 
     if (file)
