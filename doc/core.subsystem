@@ -18,7 +18,7 @@
               |- Module Subsystem
               |- Logging Subsystem
               |- Event Engine
-              | \- IO Loop Engine
+              |- IO Loop Engine
               \- Database Subsystem
 
    
