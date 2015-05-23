@@ -627,6 +627,7 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+ENGINE_C
 EGREP
 GREP
 CPP
@@ -4582,6 +4583,13 @@ $as_echo "$x4conf_cv_enable_warnings" >&6; }
 if test x"$x4conf_cv_enable_warnings" = xyes; then
     CFLAGS="-Wall $CFLAGS"
 fi
+
+ENGINE_C=
+
+
+ENGINE_C+='engine_select.$(OBJEXT)'
+
+
 
 x4conf_maxcon=`ulimit -Hn`
 if test x"$x4conf_maxcon" = xunlimited; then

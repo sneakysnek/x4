@@ -6,15 +6,17 @@ AM_LDFLAGS =
 # the previous manual Makefile
 bin_PROGRAMS = x4
 x4_SOURCES = main.c \
-	engine.c \
-	engine.h \
+	engines.c \
 	init.c \
-	init.h \
-	log.c  \
-	log.h \
-	timers.c \
-	timers.h \
-	version.h
+	log.c \
+	timers.c
+
+EXTRA_x4_SOURCES = engine_select.c
+
+ENGINE_C = @ENGINE_C@
+
+x4_LDADD = $(ENGINE_C)
+x4_DEPENDENCIES = $(ENGINE_C)
 
 nodist_x4_SOURCES = version.c
 DISTCLEANFILES = version.c

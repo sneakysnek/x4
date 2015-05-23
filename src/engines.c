@@ -1,8 +1,15 @@
 #include "config.h"
-#include "engine.h"
+#include "engines.h"
 #include "log.h"
 
-int engine_init(int max_connects)
+extern struct Engine engine_select;
+
+static const struct Engine *engines[] = {
+    &engine_select,
+    0
+};
+
+int engines_init(int max_connects)
 {
     log_stdout("core/engine", 1, "initializing IO engine for a maximum of %d connections", max_connects);
 

@@ -90,11 +90,11 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_x4_OBJECTS = main.$(OBJEXT) engine.$(OBJEXT) init.$(OBJEXT) \
+am_x4_OBJECTS = main.$(OBJEXT) engines.$(OBJEXT) init.$(OBJEXT) \
 	log.$(OBJEXT) timers.$(OBJEXT)
 nodist_x4_OBJECTS = version.$(OBJEXT)
 x4_OBJECTS = $(am_x4_OBJECTS) $(nodist_x4_OBJECTS)
-x4_LDADD = $(LDADD)
+am__DEPENDENCIES_1 =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -123,8 +123,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(x4_SOURCES) $(nodist_x4_SOURCES)
-DIST_SOURCES = $(x4_SOURCES)
+SOURCES = $(x4_SOURCES) $(EXTRA_x4_SOURCES) $(nodist_x4_SOURCES)
+DIST_SOURCES = $(x4_SOURCES) $(EXTRA_x4_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -169,6 +169,7 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
+ENGINE_C = @ENGINE_C@
 EXEEXT = @EXEEXT@
 GREP = @GREP@
 INSTALL = @INSTALL@
@@ -242,16 +243,14 @@ top_srcdir = @top_srcdir@
 AM_CFLAGS = 
 AM_LDFLAGS = 
 x4_SOURCES = main.c \
-	engine.c \
-	engine.h \
+	engines.c \
 	init.c \
-	init.h \
-	log.c  \
-	log.h \
-	timers.c \
-	timers.h \
-	version.h
+	log.c \
+	timers.c
 
+EXTRA_x4_SOURCES = engine_select.c
+x4_LDADD = $(ENGINE_C)
+x4_DEPENDENCIES = $(ENGINE_C)
 nodist_x4_SOURCES = version.c
 DISTCLEANFILES = version.c
 all: all-am
@@ -341,7 +340,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/engine.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/engine_select.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/engines.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/init.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@

@@ -50,6 +50,14 @@ if test x"$x4conf_cv_enable_warnings" = xyes; then
     CFLAGS="-Wall $CFLAGS"
 fi
 
+ENGINE_C=
+
+dnl This is where we will test for io engine availability.
+
+ENGINE_C+='engine_select.$(OBJEXT)'
+
+AC_SUBST([ENGINE_C])
+
 dnl --with-maxcon allows us to set the maximum connections
 x4conf_maxcon=`ulimit -Hn`
 if test x"$x4conf_maxcon" = xunlimited; then
