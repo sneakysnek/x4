@@ -10,12 +10,9 @@
 int main(int argc, char* argv[])
 {
     int fork = 1;
-    char startmsg[512];
 
-    snprintf(startmsg, 512, "Starting X4 %s+[%s]", version, cvs_version);
-
-    log_stdout("core/main", startmsg, 1);
-    log_stdout("core/main", "forking", 1);
+    log_stdout("core/main", 1, "Starting X4 %s+[%s]", version, cvs_version);
+    log_stdout("core/main", 1, "forking");
     init(&fork);
 
     while(1) {

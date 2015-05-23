@@ -5,8 +5,8 @@
 #define LOGFILE    "x4.log"
 extern int logFileCreated;
 
-void log_file (char *message);
-void log_stdout(char *prefix, char *str, int depth);
-void log_stderr(char *prefix, char *str, int depth);
+void log_file (char *str, ...);
+void log_stdout(char *prefix, int depth, char *str, ...);
+void log_stderr(char *prefix, int depth, char *str, ...);
 
 #endif

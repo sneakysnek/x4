@@ -1,3 +1,4 @@
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "log.h"
@@ -9,8 +10,17 @@
 * @param char * str the message string
 * @param int depth the depth of the message (e.g. INFO, ERROR,FATAL).
 */
-void log_stdout(char *prefix, char *str, int depth) {
-    printf("(%s)  -  %s\n",prefix,str);
+void log_stdout(char *prefix, int depth, char *str, ...) {
+    int n = 0;
+    char line[512];
+    va_list ap;
+
+    va_start(ap, str);
+    n = vsnprintf((char *)&line, 512, str, ap);
+    va_end(ap);
+
+    if (n >= 1)
+        printf("(%s)  -  %s\n", prefix, line);
 }
 
 /**
@@ -20,8 +30,17 @@ void log_stdout(char *prefix, char *str, int depth) {
 * @param char * str the message string
 * @param int depth the depth of the message (e.g. INFO, ERROR,FATAL).
 */
-void log_stderr(char *prefix, char *str, int depth) {
-    fprintf(stderr,"(%s)  -  %s\n",prefix,str);
+void log_stderr(char *prefix, int depth, char *str, ...) {
+    int n = 0;
+    char line[512];
+    va_list ap;
+
+    va_start(ap, str);
+    n = vsnprintf((char *)&line, 512, str, ap);
+    va_end(ap);
+
+    if (n >= 1)
+        fprintf(stderr,"(%s)  -  %s\n", prefix, line);
 }
 
 int logFileCreated = 0;
@@ -31,9 +50,19 @@ int logFileCreated = 0;
 * Log messages to LOGFILE
 * @param char *message the message to log to LOGFILE
 */
-void log_file (char *message)
+void log_file (char *str, ...)
 {
     FILE *file;
+    int n = 0;
+    char line[512];
+    va_list ap;
+
+    va_start(ap, str);
+    n = vsnprintf((char *)&line, 512, str, ap);
+    va_end(ap);
+
+    if (n <= 0)
+        return;
 
     if (!logFileCreated) {
         file = fopen(LOGFILE, "w");
@@ -49,7 +78,7 @@ void log_file (char *message)
     }
     else
     {
-        fputs(message, file);
+        fputs(line, file);
         fclose(file);
     }
 
