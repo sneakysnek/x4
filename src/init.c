@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <signal.h>
+#include "config.h"
+#include "engine.h"
 #include "init.h"
 #include "log.h"
 
@@ -15,15 +17,23 @@
 void init(int *fork)
 {
     log_stdout("core/init", 1, "entering init");
+
     signal(SIGKILL, init_sig_handler);
+
     if (!init_checkPid()) {
         pid_t pid = 0;
         if (*fork) {
             init_fork(&pid);
         }
     } else {
-        printf("Error: process already running.\n");
-        exit(0);
+        log_stderr("core/init", 1, "Error: process already running.\n");
+        exit(-1);
+    }
+
+    if (engine_init(MAXCONNECTIONS) != 0)
+    {
+        log_stderr("core/init", 1, "unable to initialize IO engine");
+        exit(-1);
     }
 }
 

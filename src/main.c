@@ -2,11 +2,10 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "config.h"
 #include "init.h"
-#include "engine.h"
 #include "log.h"
 #include "timers.h"
-#include "config.h"
 #include "version.h"
 
 int main(int argc, char* argv[])
@@ -16,15 +15,7 @@ int main(int argc, char* argv[])
     log_stdout("core/main", 1, "Starting X4 %s+[%s]", version, cvs_version);
     log_stdout("core/main", 1, "forking");
 
-    engine_init(MAXCONNECTIONS);
-
     init(&fork);
-
-    if (engine_init(MAXCONNECTIONS) != 0)
-    {
-        log_stderr("core/main", 1, "unable to initialize IO engine");
-        return -1;
-    }
 
     while(1) {
         struct TimerInfo *ti = timer_next();
