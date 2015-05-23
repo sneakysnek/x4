@@ -90,8 +90,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_x4_OBJECTS = main.$(OBJEXT) init.$(OBJEXT) log.$(OBJEXT) \
-	timers.$(OBJEXT)
+am_x4_OBJECTS = main.$(OBJEXT) engine.$(OBJEXT) init.$(OBJEXT) \
+	log.$(OBJEXT) timers.$(OBJEXT)
 nodist_x4_OBJECTS = version.$(OBJEXT)
 x4_OBJECTS = $(am_x4_OBJECTS) $(nodist_x4_OBJECTS)
 x4_LDADD = $(LDADD)
@@ -242,6 +242,8 @@ top_srcdir = @top_srcdir@
 AM_CFLAGS = 
 AM_LDFLAGS = 
 x4_SOURCES = main.c \
+	engine.c \
+	engine.h \
 	init.c \
 	init.h \
 	log.c  \
@@ -339,6 +341,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/engine.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/init.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@

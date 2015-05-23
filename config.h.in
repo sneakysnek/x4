@@ -45,6 +45,9 @@
 /* Define to 1 if `vfork' works. */
 #undef HAVE_WORKING_VFORK
 
+/* Maximum number of network connections */
+#undef MAXCONNECTIONS
+
 /* Name of package */
 #undef PACKAGE
 
@@ -71,9 +74,6 @@
 
 /* Version number of package */
 #undef VERSION
-
-/* Maximum number of network connections */
-#undef MAXCONNECTIONS
 
 /* Define to `int' if <sys/types.h> does not define. */
 #undef pid_t

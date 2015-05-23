@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
+
 #include "init.h"
+#include "engine.h"
 #include "log.h"
 #include "timers.h"
 #include "config.h"
@@ -13,6 +15,9 @@ int main(int argc, char* argv[])
 
     log_stdout("core/main", 1, "Starting X4 %s+[%s]", version, cvs_version);
     log_stdout("core/main", 1, "forking");
+
+    engine_init(MAXCONNECTIONS);
+
     init(&fork);
 
     while(1) {

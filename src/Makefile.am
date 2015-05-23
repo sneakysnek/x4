@@ -6,6 +6,8 @@ AM_LDFLAGS =
 # the previous manual Makefile
 bin_PROGRAMS = x4
 x4_SOURCES = main.c \
+	engine.c \
+	engine.h \
 	init.c \
 	init.h \
 	log.c  \
