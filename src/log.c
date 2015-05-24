@@ -20,7 +20,7 @@ void log_stdout(char *prefix, int depth, char *str, ...) {
     va_end(ap);
 
     if (n >= 1)
-        printf("(%s)  -  %s\n", prefix, line);
+        printf("(%s) - %s\n", prefix, line);
 }
 
 /**
@@ -40,7 +40,7 @@ void log_stderr(char *prefix, int depth, char *str, ...) {
     va_end(ap);
 
     if (n >= 1)
-        fprintf(stderr,"(%s)  -  %s\n", prefix, line);
+        fprintf(stderr, "(%s) - %s\n", prefix, line);
 }
 
 int logFileCreated = 0;
@@ -50,7 +50,7 @@ int logFileCreated = 0;
 * Log messages to LOGFILE
 * @param char *message the message to log to LOGFILE
 */
-void log_file (char *str, ...)
+void log_file (char *prefix, int depth, char *str, ...)
 {
     FILE *file;
     int n = 0;
@@ -78,7 +78,7 @@ void log_file (char *str, ...)
     }
     else
     {
-        fputs(line, file);
+        fprintf(file, "(%s) - %s\n", prefix, line);
         fclose(file);
     }
 
