@@ -42,6 +42,7 @@ build_install() {
     if [ "$INSTALLDIR" != "" ] ; then
         B_INSTALL_DIR = "--prefix=$INSTALLDIR"
     fi
+<<<<<<< HEAD
 
     if [ "$MAXCONNS" != "" ] ; then
         B_MAXCONNS = "--with-maxcon=$MAXCONNS"
@@ -51,6 +52,9 @@ build_install() {
         B_DEBUGMODE = "--enable-debug"
     fi
 }    
+=======
+}
+>>>>>>> a483b837381f906fc196eb2bc6beb901d688968b
 
 ok=0
 

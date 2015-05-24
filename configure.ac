@@ -27,6 +27,19 @@ AC_FUNC_FORK
 dnl Find out what type of system we are
 AC_CANONICAL_HOST
 
+dnl Now look for --enable-debug
+AC_MSG_CHECKING([whether to enable debug mode])
+AC_ARG_ENABLE([debug],
+[  --enable-debug          Turn on debugging mode],
+[x4conf_cv_enable_debug=$enable_debug],
+[AC_CACHE_VAL(x4conf_cv_enable_debug,
+[x4conf_cv_enable_debug=no])])
+AC_MSG_RESULT([$x4conf_cv_enable_debug])
+
+if test x"$x4conf_cv_enable_debug" = xyes; then
+    AC_DEFINE([DEBUGMODE], 1, [Enable debugging code])
+fi
+
 dnl Now check for --enable-pedantic
 AC_MSG_CHECKING([whether to enable pedantic compiler warnings])
 AC_ARG_ENABLE([pedantic],
