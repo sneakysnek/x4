@@ -8,7 +8,6 @@
 
 HOMEDIR="${HOME}"
 ISNUM="^[1-9][0-9]*$"
-YN="^([Yy]([Ee][Ss])?|[Nn]([Oo])?)+$"
 
 # Variables we need to send to configure
 INSTALLDIR="${HOME}/x4"
@@ -129,9 +128,17 @@ while [ "${ok}" -eq 0 ] ; do
     fi
 
     if [ "${INPUT}" ] ; then
-        echo "$INPUT" | grep -q "$YN"
+        echo "$INPUT" | grep -iq "$INPUT"
         if [ $? -ne 0 ] ; then
             echo "Invalid input. Must be yes (y) or no (n)."
+            continue
+        fi
+        if [ \("$INPUT" == "y"\) -o \("$INPUT" == "yes"\) ] ; then
+            echo "WE GOT A YES!"
+            continue
+        fi
+        if [ \("$INPUT" == "n"\) -o \("$INPUT" == "no"\) ] ; then
+            echo "WE GOT A NO!"
             continue
         fi
         if [ "$INPUT" != "$DEBUGMODE" ] ; then
