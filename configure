@@ -726,6 +726,7 @@ ac_user_opts='
 enable_option_checking
 enable_silent_rules
 enable_dependency_tracking
+enable_debug
 enable_pedantic
 enable_warnings
 enable_poll
@@ -1364,6 +1365,7 @@ Optional Features:
                           do not reject slow dependency extractors
   --disable-dependency-tracking
                           speeds up one-time build
+  --enable-debug          Turn on debugging mode
   --enable-pedantic       Enable pedantic warnings (add -pedantic to CFLAGS)
   --enable-warnings       Enable warnings (add -Wall to CFLAGS)
   --enable-poll           Force poll to be used regardless of whether or not
@@ -4628,6 +4630,29 @@ IFS=$ac_save_IFS
 case $host_os in *\ *) host_os=`echo "$host_os" | sed 's/ /-/g'`;; esac
 
 
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to enable debug mode" >&5
+$as_echo_n "checking whether to enable debug mode... " >&6; }
+# Check whether --enable-debug was given.
+if test "${enable_debug+set}" = set; then :
+  enableval=$enable_debug; x4conf_cv_enable_debug=$enable_debug
+else
+  if ${x4conf_cv_enable_debug+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  x4conf_cv_enable_debug=no
+fi
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $x4conf_cv_enable_debug" >&5
+$as_echo "$x4conf_cv_enable_debug" >&6; }
+
+if test x"$x4conf_cv_enable_debug" = xyes; then
+
+$as_echo "#define DEBUGMODE 1" >>confdefs.h
+
+fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to enable pedantic compiler warnings" >&5
 $as_echo_n "checking whether to enable pedantic compiler warnings... " >&6; }
