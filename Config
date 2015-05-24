@@ -33,7 +33,7 @@ build_install() {
     if [ "$INSTALLDIR" != "" ] ; then
         B_INSTALL_DIR = "--prefix=$INSTALLDIR"
     fi
-}    
+}
 
 ok=0
 
