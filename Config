@@ -99,6 +99,7 @@ while [ "${ok}" -eq 0 ] ; do
             if [ "$INPUT" != "$MAXCONNS" ] ; then
                 CHG_MAXCONNS="y"
                 MAXCONNS=$INPUT
+                break
             fi
         else
             echo "Invalid input. Max connections must be a valid number and between 100 and 500000"
