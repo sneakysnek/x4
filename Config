@@ -71,12 +71,13 @@ while [ "${ok}" -eq 0 ] ; do
     echo "[${INSTALLDIR}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
-        if [ "$INPUT" != "$INSTALLDIR" ] ; then
-            CHG_INSTALLDIR="y"
-        fi
         INPUT=$INSTALLDIR
         ok=1
     fi
+    if [ "$INPUT" != "$INSTALLDIR" ] ; then
+        CHG_INSTALLDIR="y"
+    fi
+    /* How do we validate the path here? if valid set ok=1 and INSTALLDIR=$INPUT */
 done
 
 ok=0
@@ -88,12 +89,13 @@ while [ "${ok}" -eq 0 ] ; do
     echo "[${MAXCONNS}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
-        if [ "$INPUT" != "$MAXCONNS" ] ; then
-            CHG_MAXCONNS="y"
-        fi
         INPUT=$MAXCONNS
         ok=1
     fi
+    if [ "$INPUT" != "$MAXCONNS" ] ; then
+        CHG_MAXCONNS="y"
+    fi
+    /* NEED to validate $INPUT is a valid number above 100 here, if it is then set MAXCONNS=$INPUT and set ok=1 if it is valid */
 done
 
 ok=0
@@ -105,12 +107,13 @@ while [ "${ok}" -eq 0 ] ; do
     echo "[n] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
-        if [ "$INPUT" != "$DEBUGMODE" ] ; then
-            CHG_DEBUGMODE="y"
-        fi
         INPUT=$DEBUGMODE
         ok=1
     fi
+    if [ "$INPUT" != "$DEBUGMODE" ] ; then
+        CHG_DEBUGMODE="y"
+    fi
+    /* NEED to validate $INPUT is either yes, y, no or n, if it is then set DEBUGMODE=$INPUT and set ok=1 */
 done
 
 ####
