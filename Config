@@ -8,6 +8,7 @@
 
 HOMEDIR="${HOME}"
 ISNUM="^[1-9][0-9]*$"
+YNREG="^[yn]$"
 
 # Variables we need to send to configure
 INSTALLDIR="${HOME}/x4"
@@ -128,7 +129,7 @@ while [ "${ok}" -eq 0 ] ; do
     fi
 
     if [ "${INPUT}" ] ; then
-        echo "$INPUT" | grep -iq "$INPUT"
+        echo "$INPUT" | grep -iq "$YNREG"
         if [ $? -ne 0 ] ; then
             echo "Invalid input. Must be yes (y) or no (n)."
             continue
