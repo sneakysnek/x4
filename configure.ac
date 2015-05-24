@@ -5,6 +5,7 @@ AC_PREREQ([2.69])
 AC_INIT([X4], [0.0.1], [evilnet-devel@lists.sourceforge.net])
 AC_CONFIG_SRCDIR([src/main.c])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_AUX_DIR([actools])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_PREFIX_DEFAULT([$HOME/x4])
 
