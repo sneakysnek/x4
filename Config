@@ -135,16 +135,14 @@ while [ "${ok}" -eq 0 ] ; do
             continue
         fi
         if [ \("$INPUT" == "y"\) -o \("$INPUT" == "yes"\) ] ; then
-            echo "WE GOT A YES!"
             continue
         fi
         if [ \("$INPUT" == "n"\) -o \("$INPUT" == "no"\) ] ; then
-            echo "WE GOT A NO!"
             continue
         fi
         if [ "$INPUT" != "$DEBUGMODE" ] ; then
             CHG_DEBUGMODE="y"
-            DEBUGMODE=$INPUT
+            DEBUGMODE="y"
         fi
         break
     fi
