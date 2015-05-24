@@ -72,7 +72,6 @@ while [ "${ok}" -eq 0 ] ; do
     echo "[${INSTALLDIR}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
-        INPUT=$INSTALLDIR
         break
     fi
     if [ "$INPUT" != "$INSTALLDIR" ] ; then
@@ -90,19 +89,18 @@ while [ "${ok}" -eq 0 ] ; do
     echo "[${MAXCONNS}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
-        INPUT=$MAXCONNS
         break
     fi
 
     if [ "${INPUT}" ] ; then
-        if [[ "$INPUT" =~ $ISNUM && "$INPUT" -gt 100 && "$INPUT" -lt 500000 ]] ; then
+        if [[ "$INPUT" =~ $ISNUM && "$INPUT" -gt 100 && "$INPUT" -lt "$MAXCONNS" ]] ; then
             if [ "$INPUT" != "$MAXCONNS" ] ; then
                 CHG_MAXCONNS="y"
                 MAXCONNS=$INPUT
-                break
             fi
+            break
         else
-            echo "Invalid input. Max connections must be a valid number and between 100 and 500000"
+            echo "Invalid input. Max connections must be a valid number and between 100 and $MAXCONNS"
         fi
     fi
 done
