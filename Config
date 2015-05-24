@@ -72,7 +72,7 @@ while [ "${ok}" -eq 0 ] ; do
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
         INPUT=$INSTALLDIR
-        ok=1
+        break
     fi
     if [ "$INPUT" != "$INSTALLDIR" ] ; then
         CHG_INSTALLDIR="y"
@@ -90,7 +90,7 @@ while [ "${ok}" -eq 0 ] ; do
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
         INPUT=$MAXCONNS
-        ok=1
+        break
     fi
     if [ "$INPUT" != "$MAXCONNS" ] ; then
         CHG_MAXCONNS="y"
@@ -108,7 +108,7 @@ while [ "${ok}" -eq 0 ] ; do
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
         INPUT=$DEBUGMODE
-        ok=1
+        break
     fi
     if [ "$INPUT" != "$DEBUGMODE" ] ; then
         CHG_DEBUGMODE="y"
