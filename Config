@@ -13,6 +13,11 @@ INSTALLDIR="${HOME}/x4"
 MAXCONNS=4096
 DEBUGMODE=n
 
+# Were any of the values changed?
+CHG_INSTALLDIR="n"
+CHG_MAXCONNS="n"
+CHG_DEBUGMODE="n"
+
 MAXCONNS=`ulimit -Hn`
 if test x"$MAXCONNS" = xunlimited; then
     MAXCONNS=`ulimit -Sn`
@@ -58,6 +63,7 @@ build_install() {
 }
 
 ok=0
+echo ""
 
 ####
 echo "What directory should we use for X4?"
@@ -65,27 +71,16 @@ while [ "${ok}" -eq 0 ] ; do
     echo "[${INSTALLDIR}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
+        if [ "$INPUT" != "$INSTALLDIR" ] ; then
+            CHG_INSTALLDIR="y"
+        fi
         INPUT=$INSTALLDIR
         ok=1
-    fi
-
-    if [ ! -d "$INPUT" ] ; then
-        if exists "$INPUT" ; then
-            echo "$INPUT is not a valid directory."
-        else
-            echo "$INPUT does not exist. Should we create it?"
-            echo "[y]"
-            read YN
-            if [ "${YN}" != "n" ] ; then
-                if mkdir -p $INPUT ; then
-                    ok=1
-                fi
-            fi
-        fi
     fi
 done
 
 ok=0
+echo ""
 
 ####
 echo "How many connections should we allow?"
@@ -93,19 +88,26 @@ while [ "${ok}" -eq 0 ] ; do
     echo "[${MAXCONNS}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
+        if [ "$INPUT" != "$MAXCONNS" ] ; then
+            CHG_MAXCONNS="y"
+        fi
         INPUT=$MAXCONNS
         ok=1
     fi
 done
 
 ok=0
+echo ""
 
 ####
-echo "Should we run X4 in debug mode?"
+echo "Should we enable debug code in X4?"
 while [ "${ok}" -eq 0 ] ; do
     echo "[n] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
+        if [ "$INPUT" != "$DEBUGMODE" ] ; then
+            CHG_DEBUGMODE="y"
+        fi
         INPUT=$DEBUGMODE
         ok=1
     fi
@@ -121,6 +123,11 @@ echo "Preparing to install..."
 cat <<EOT >./config.cache
 INSTALLDIR = "$B_INSTALL_DIR
 EOT
+echo ""
+echo "Install Directory: ${INSTALLDIR} (Changed: ${CHG_INSTALLDIR})"
+echo "Max Connections: ${MAXCONNS} (Changed: ${CHG_MAXCONNS})"
+echo "Debug Mode: ${DEBUGMODE} (Changed: ${CHG_DEBUGMODE})"
+echo ""
 echo "Configure stage complete. Please proceed with make to continue your installation."
 
 build_install
