@@ -7,6 +7,7 @@
 #######################################################
 
 HOMEDIR="${HOME}"
+ISNUM="^[0-9]+$"
 
 # Variables we need to send to configure
 INSTALLDIR="${HOME}/x4"
@@ -92,10 +93,17 @@ while [ "${ok}" -eq 0 ] ; do
         INPUT=$MAXCONNS
         break
     fi
-    if [ "$INPUT" != "$MAXCONNS" ] ; then
-        CHG_MAXCONNS="y"
+
+    if [ "${INPUT}" ] ; then
+        if [[ "$INPUT" =~ $ISNUM && "$INPUT" -gt 100 && "$INPUT" -lt 500000 ]] ; then
+            if [ "$INPUT" != "$MAXCONNS" ] ; then
+                CHG_MAXCONNS="y"
+                MAXCONNS=$INPUT
+            fi
+        else
+            echo "Invalid input. Max connections must be a valid number and between 100 and 500000"
+        fi
     fi
-    /* NEED to validate $INPUT is a valid number above 100 here, if it is then set MAXCONNS=$INPUT and set ok=1 if it is valid */
 done
 
 ok=0
