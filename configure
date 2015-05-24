@@ -628,6 +628,14 @@ am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
 ENGINE_C
+host_os
+host_vendor
+host_cpu
+host
+build_os
+build_vendor
+build_cpu
+build
 EGREP
 GREP
 CPP
@@ -720,6 +728,7 @@ enable_silent_rules
 enable_dependency_tracking
 enable_pedantic
 enable_warnings
+enable_poll
 with_maxcon
 '
       ac_precious_vars='build_alias
@@ -1332,6 +1341,10 @@ Program names:
   --program-prefix=PREFIX            prepend PREFIX to installed program names
   --program-suffix=SUFFIX            append SUFFIX to installed program names
   --program-transform-name=PROGRAM   run sed PROGRAM on installed program names
+
+System types:
+  --build=BUILD     configure for building on BUILD [guessed]
+  --host=HOST       cross-compile to build programs to run on HOST [BUILD]
 _ACEOF
 fi
 
@@ -1353,6 +1366,8 @@ Optional Features:
                           speeds up one-time build
   --enable-pedantic       Enable pedantic warnings (add -pedantic to CFLAGS)
   --enable-warnings       Enable warnings (add -Wall to CFLAGS)
+  --enable-poll           Force poll to be used regardless of whether or not
+                          it is a system call
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -4300,7 +4315,7 @@ fi
 done
 
 
-for ac_header in stdlib.h string.h unistd.h
+for ac_header in stdlib.h string.h unistd.h poll.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
@@ -4542,6 +4557,78 @@ $as_echo "#define HAVE_WORKING_FORK 1" >>confdefs.h
 fi
 
 
+# Make sure we can run config.sub.
+$SHELL "$ac_aux_dir/config.sub" sun4 >/dev/null 2>&1 ||
+  as_fn_error $? "cannot run $SHELL $ac_aux_dir/config.sub" "$LINENO" 5
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking build system type" >&5
+$as_echo_n "checking build system type... " >&6; }
+if ${ac_cv_build+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_build_alias=$build_alias
+test "x$ac_build_alias" = x &&
+  ac_build_alias=`$SHELL "$ac_aux_dir/config.guess"`
+test "x$ac_build_alias" = x &&
+  as_fn_error $? "cannot guess build type; you must specify one" "$LINENO" 5
+ac_cv_build=`$SHELL "$ac_aux_dir/config.sub" $ac_build_alias` ||
+  as_fn_error $? "$SHELL $ac_aux_dir/config.sub $ac_build_alias failed" "$LINENO" 5
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_build" >&5
+$as_echo "$ac_cv_build" >&6; }
+case $ac_cv_build in
+*-*-*) ;;
+*) as_fn_error $? "invalid value of canonical build" "$LINENO" 5;;
+esac
+build=$ac_cv_build
+ac_save_IFS=$IFS; IFS='-'
+set x $ac_cv_build
+shift
+build_cpu=$1
+build_vendor=$2
+shift; shift
+# Remember, the first character of IFS is used to create $*,
+# except with old shells:
+build_os=$*
+IFS=$ac_save_IFS
+case $build_os in *\ *) build_os=`echo "$build_os" | sed 's/ /-/g'`;; esac
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking host system type" >&5
+$as_echo_n "checking host system type... " >&6; }
+if ${ac_cv_host+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test "x$host_alias" = x; then
+  ac_cv_host=$ac_cv_build
+else
+  ac_cv_host=`$SHELL "$ac_aux_dir/config.sub" $host_alias` ||
+    as_fn_error $? "$SHELL $ac_aux_dir/config.sub $host_alias failed" "$LINENO" 5
+fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_host" >&5
+$as_echo "$ac_cv_host" >&6; }
+case $ac_cv_host in
+*-*-*) ;;
+*) as_fn_error $? "invalid value of canonical host" "$LINENO" 5;;
+esac
+host=$ac_cv_host
+ac_save_IFS=$IFS; IFS='-'
+set x $ac_cv_host
+shift
+host_cpu=$1
+host_vendor=$2
+shift; shift
+# Remember, the first character of IFS is used to create $*,
+# except with old shells:
+host_os=$*
+IFS=$ac_save_IFS
+case $host_os in *\ *) host_os=`echo "$host_os" | sed 's/ /-/g'`;; esac
+
+
+
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to enable pedantic compiler warnings" >&5
 $as_echo_n "checking whether to enable pedantic compiler warnings... " >&6; }
 # Check whether --enable-pedantic was given.
@@ -4584,10 +4671,98 @@ if test x"$x4conf_cv_enable_warnings" = xyes; then
     CFLAGS="-Wall $CFLAGS"
 fi
 
-ENGINE_C=
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for OS-dependent information" >&5
+$as_echo_n "checking for OS-dependent information... " >&6; }
+case "$host" in
+    *-linux*)
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: Linux ($host) found." >&5
+$as_echo "Linux ($host) found." >&6; }
+        x4conf_poll_syscall=yes
+        ;;
+
+    *-solaris*)
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: Solaris ($host) found." >&5
+$as_echo "Solaris ($host) found." >&6; }
+        if test x"$ac_cv_header_poll_h" = xyes; then
+            x4conf_poll_syscall=yes
+        else
+            x4conf_poll_syscall=no
+        fi
+        ;;
+
+    *-sunos*)
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: Solaris ($host) found." >&5
+$as_echo "Solaris ($host) found." >&6; }
+        x4conf_poll_syscall=no
+        ;;
+
+    *-openbsd*)
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: OpenBSD ($host) found." >&5
+$as_echo "OpenBSD ($host) found." >&6; }
+        if test x"$ac_cv_header_poll_h" = xyes; then
+            x4conf_poll_syscall=yes
+        else
+            x4conf_poll_syscall=no
+        fi
+        ;;
+
+    *-*bsd*)
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: Generic BSD ($host) found." >&5
+$as_echo "Generic BSD ($host) found." >&6; }
+        if test x"$ac_cv_header_poll_h" = xyes; then
+            x4conf_poll_syscall=yes
+        else
+            x4conf_poll_syscall=no
+        fi
+        ;;
+
+    *-darwin*)
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: Darwin (Mac OS X) ($host) found." >&5
+$as_echo "Darwin (Mac OS X) ($host) found." >&6; }
+        x4conf_poll_syscall=no
+        ;;
+
+    *)
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: Unknown system type $host found." >&5
+$as_echo "Unknown system type $host found." >&6; }
+        { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Unknown OS type; using generic routines." >&5
+$as_echo "$as_me: WARNING: Unknown OS type; using generic routines." >&2;}
+        x4conf_poll_syscall=no
+        ;;
+esac
+
+ENGINE_C='engine_select.$(OBJEXT)'
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to enable use of poll()" >&5
+$as_echo_n "checking whether to enable use of poll()... " >&6; }
+# Check whether --enable-poll was given.
+if test "${enable_poll+set}" = set; then :
+  enableval=$enable_poll; x4conf_cv_enable_poll=$enable_poll
+else
+  if ${x4conf_cv_enable_poll+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  x4conf_cv_enable_poll=$x4conf_poll_syscall
+fi
+
+fi
 
 
-ENGINE_C+='engine_select.$(OBJEXT)'
+# Force poll to be disabled if there is no poll.h
+if test x"$ac_cv_header_poll_h" != xyes; then
+    x4conf_cv_enable_poll=no
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $x4conf_cv_enable_poll" >&5
+$as_echo "$x4conf_cv_enable_poll" >&6; }
+
+if test x"$x4conf_cv_enable_poll" = xyes; then
+
+$as_echo "#define USE_POLL 1" >>confdefs.h
+
+    ENGINE_POLL='engine_poll.$(OBJEXT)'
+    ENGINE_C="$ENGINE_POLL $ENGINE_C"
+fi
 
 
 

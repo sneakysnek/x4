@@ -11,7 +11,7 @@ x4_SOURCES = main.c \
 	log.c \
 	timers.c
 
-EXTRA_x4_SOURCES = engine_select.c
+EXTRA_x4_SOURCES = engine_select.c engine_poll.c
 
 ENGINE_C = @ENGINE_C@
 

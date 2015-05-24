@@ -16,13 +16,16 @@ AC_PROG_CC
 AC_CHECK_LIB([dl], [main])
 
 # Checks for header files.
-AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
+AC_CHECK_HEADERS([stdlib.h string.h unistd.h poll.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_PID_T
 
 # Checks for library functions.
 AC_FUNC_FORK
+
+dnl Find out what type of system we are
+AC_CANONICAL_HOST
 
 dnl Now check for --enable-pedantic
 AC_MSG_CHECKING([whether to enable pedantic compiler warnings])
@@ -50,11 +53,81 @@ if test x"$x4conf_cv_enable_warnings" = xyes; then
     CFLAGS="-Wall $CFLAGS"
 fi
 
-ENGINE_C=
+dnl Check OS for os_dep files.
+AC_MSG_CHECKING(for OS-dependent information)
+case "$host" in
+    *-linux*)
+        AC_MSG_RESULT([Linux ($host) found.])
+        x4conf_poll_syscall=yes
+        ;;
 
-dnl This is where we will test for io engine availability.
+    *-solaris*)
+        AC_MSG_RESULT([Solaris ($host) found.])
+        if test x"$ac_cv_header_poll_h" = xyes; then
+            x4conf_poll_syscall=yes
+        else
+            x4conf_poll_syscall=no
+        fi
+        ;;
 
-ENGINE_C+='engine_select.$(OBJEXT)'
+    *-sunos*)
+        AC_MSG_RESULT([Solaris ($host) found.])
+        x4conf_poll_syscall=no
+        ;;
+
+    *-openbsd*)
+        AC_MSG_RESULT([OpenBSD ($host) found.])
+        if test x"$ac_cv_header_poll_h" = xyes; then
+            x4conf_poll_syscall=yes
+        else
+            x4conf_poll_syscall=no
+        fi
+        ;;
+
+    *-*bsd*)
+        AC_MSG_RESULT([Generic BSD ($host) found.])
+        if test x"$ac_cv_header_poll_h" = xyes; then
+            x4conf_poll_syscall=yes
+        else
+            x4conf_poll_syscall=no
+        fi
+        ;;
+
+    *-darwin*)
+        AC_MSG_RESULT([Darwin (Mac OS X) ($host) found.])
+        x4conf_poll_syscall=no
+        ;;
+
+    *)
+        AC_MSG_RESULT([Unknown system type $host found.])
+        AC_MSG_WARN([Unknown OS type; using generic routines.])
+        x4conf_poll_syscall=no
+        ;;
+esac
+
+ENGINE_C='engine_select.$(OBJEXT)'
+
+dnl Start with --enable-poll
+AC_MSG_CHECKING([whether to enable use of poll()])
+AC_ARG_ENABLE([poll],
+[  --enable-poll           Force poll to be used regardless of whether or not
+                          it is a system call],
+[x4conf_cv_enable_poll=$enable_poll],
+[AC_CACHE_VAL(x4conf_cv_enable_poll,
+[x4conf_cv_enable_poll=$x4conf_poll_syscall])])
+
+# Force poll to be disabled if there is no poll.h
+if test x"$ac_cv_header_poll_h" != xyes; then
+    x4conf_cv_enable_poll=no
+fi
+
+AC_MSG_RESULT([$x4conf_cv_enable_poll])
+
+if test x"$x4conf_cv_enable_poll" = xyes; then
+    AC_DEFINE([USE_POLL], 1, [Specify whether or not to use poll()])
+    ENGINE_POLL='engine_poll.$(OBJEXT)'
+    ENGINE_C="$ENGINE_POLL $ENGINE_C"
+fi
 
 AC_SUBST([ENGINE_C])
 

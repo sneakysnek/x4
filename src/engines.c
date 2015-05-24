@@ -4,9 +4,17 @@
 #include "engines.h"
 #include "log.h"
 
+#ifdef USE_POLL
+extern struct Engine engine_poll;
+#define ENGINE_POLL &engine_poll,
+#else
+#define ENGINE_POLL
+#endif /* USE_POLL */
+
 extern struct Engine engine_select;
 
 static const struct Engine *engines[] = {
+    ENGINE_POLL
     &engine_select,
     0
 };
