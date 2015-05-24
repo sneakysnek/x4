@@ -6,6 +6,13 @@
 #
 #######################################################
 
+HOMEDIR="${HOME}"
+
+# Variables we need to send to configure
+INSTALLDIR="${HOME}/x4"
+MAXCONNS=4096
+DEBUGMODE=n
+
 exists() {
     if [ -f $1 -o -d $1 -o -p $1 -o -c $1 -o -b $1 ] ; then
         return 0
@@ -26,19 +33,29 @@ load_cache() {
 }
 
 build_install() {
-    B_INSTALL_DIR="~/x4"
+    B_INSTALL_DIR=""
+    B_MAXCONNS=""
+    B_DEBUGMODE=""
     B_INCLUDE=""
     B_LIBS=""
 
     if [ "$INSTALLDIR" != "" ] ; then
         B_INSTALL_DIR = "--prefix=$INSTALLDIR"
     fi
+
+    if [ "$MAXCONNS" != "" ] ; then
+        B_MAXCONNS = "--with-maxcon=$MAXCONNS"
+    fi
+
+    if [ "$DEBUGMODE" != "n" ] ; then
+        B_DEBUGMODE = "--enable-debug"
+    fi
 }    
 
 ok=0
 
 ####
-echo "What directory should we install X4?"
+echo "What directory should we use for X4?"
 while [ "${ok}" -eq 0 ] ; do
     echo "[${INSTALLDIR}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
@@ -63,6 +80,29 @@ while [ "${ok}" -eq 0 ] ; do
     fi
 done
 
+####
+echo "How many connections should we allow?"
+while [ "${ok}" -eq 0 ] ; do
+    echo "[Unlimited] "
+    if read INPUT ; then : ; else echo "" ; exit 1 ; fi
+    if [ ! "${INPUT}" ] ; then
+        INPUT=MAXCONNS
+        ok=1
+    fi
+done
+
+####
+echo "Should we run X4 in debug mode?"
+while [ "${ok}" -eq 0 ] ; do
+    echo "[n] "
+    if read INPUT ; then : ; else echo "" ; exit 1 ; fi
+    if [ ! "${INPUT}" ] ; then
+        INPUT=DEBUGMODE
+        ok=1
+    fi
+done
+
+####
 export B_INSTALLDIR $INPUT
 echo ""
 
@@ -72,6 +112,6 @@ echo "Preparing to install..."
 cat <<EOT >./config.cache
 INSTALLDIR = "$B_INSTALL_DIR
 EOT
-echo "Done. Please continue with make to continue your installation."
+echo "Configure stage complete. Please proceed with make to continue your installation."
 
 build_install
