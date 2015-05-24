@@ -13,6 +13,11 @@ INSTALLDIR="${HOME}/x4"
 MAXCONNS=4096
 DEBUGMODE=n
 
+MAXCONNS=`ulimit -Hn`
+if test x"$MAXCONNS" = xunlimited; then
+    MAXCONNS=`ulimit -Sn`
+fi
+
 exists() {
     if [ -f $1 -o -d $1 -o -p $1 -o -c $1 -o -b $1 ] ; then
         return 0
@@ -40,15 +45,15 @@ build_install() {
     B_LIBS=""
 
     if [ "$INSTALLDIR" != "" ] ; then
-        B_INSTALL_DIR = "--prefix=$INSTALLDIR"
+        B_INSTALL_DIR="--prefix=$INSTALLDIR"
     fi
 
     if [ "$MAXCONNS" != "" ] ; then
-        B_MAXCONNS = "--with-maxcon=$MAXCONNS"
+        B_MAXCONNS="--with-maxcon=$MAXCONNS"
     fi
 
     if [ "$DEBUGMODE" != "n" ] ; then
-        B_DEBUGMODE = "--enable-debug"
+        B_DEBUGMODE="--enable-debug"
     fi
 }
 
@@ -60,7 +65,7 @@ while [ "${ok}" -eq 0 ] ; do
     echo "[${INSTALLDIR}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
-        INPUT=INSTALLDIR
+        INPUT=$INSTALLDIR
         ok=1
     fi
 
@@ -80,16 +85,20 @@ while [ "${ok}" -eq 0 ] ; do
     fi
 done
 
+ok=0
+
 ####
 echo "How many connections should we allow?"
 while [ "${ok}" -eq 0 ] ; do
-    echo "[Unlimited] "
+    echo "[${MAXCONNS}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
-        INPUT=MAXCONNS
+        INPUT=$MAXCONNS
         ok=1
     fi
 done
+
+ok=0
 
 ####
 echo "Should we run X4 in debug mode?"
@@ -97,7 +106,7 @@ while [ "${ok}" -eq 0 ] ; do
     echo "[n] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
     if [ ! "${INPUT}" ] ; then
-        INPUT=DEBUGMODE
+        INPUT=$DEBUGMODE
         ok=1
     fi
 done
