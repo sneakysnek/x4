@@ -20,6 +20,13 @@ int engine_poll_init(int max_conns)
 
     pollfdList = (struct pollfd*) malloc(sizeof(struct pollfd) * max_conns);
 
+    if (pollfdList == NULL)
+    {
+        log_stderr("core/engine/poll", 1,
+                   "failed to initialize poll() io engine: unable to allocate memory");
+        return -1;
+    }
+
     /* initialize the data */
     for (i = 0; i < max_conns; i++) {
         pollfdList[i].fd = -1;

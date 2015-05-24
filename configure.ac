@@ -16,7 +16,7 @@ AC_PROG_CC
 AC_CHECK_LIB([dl], [main])
 
 # Checks for header files.
-AC_CHECK_HEADERS([stdlib.h string.h unistd.h poll.h])
+AC_CHECK_HEADERS([assert.h poll.h signal.h stdlib.h stdio.h string.h stdarg.h sys/time.h sys/types.h sys/stat.h time.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_PID_T
