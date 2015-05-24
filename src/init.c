@@ -88,7 +88,7 @@ void init_fork(pid_t *pid)
     if (*pid < 0)
     {
         printf("Error: fork failed\n");
-        // Return failure in exit status
+        /* Return failure in exit status */
         exit(1);
     }
 
