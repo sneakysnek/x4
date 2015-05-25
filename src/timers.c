@@ -37,17 +37,12 @@ struct TimerInfo *timer_add(time_t timestamp, TimerCallback callback, void *stat
         if (ti->ti_timestamp > newti->ti_timestamp)
         {
             if (ti->ti_prev == NULL)
-            {
-                newti->ti_next = timers;
                 timers = newti;
-            }
             else
-            {
-                newti->ti_prev = ti->ti_prev;
-                newti->ti_next = ti;
                 ti->ti_prev->ti_next = newti;
-                ti->ti_prev = newti;
-            }
+            newti->ti_prev = ti->ti_prev;
+            newti->ti_next = ti;
+            ti->ti_prev = newti;
             return newti;
         }
 
