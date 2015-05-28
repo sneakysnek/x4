@@ -4,6 +4,8 @@
 #include "ioengine.h"
 #include "log.h"
 
+/** Array of active Socket structures, indexed by file descriptor. */
+static struct Socket** sockList;
 /** Array of poll() active elements. */
 static struct pollfd* pollfdList;
 /** Number of pollfd elements currently used. */
@@ -18,9 +20,10 @@ int ioengine_poll_init(int max_conns)
     log_stdout("core/ioengine/poll", 1,
                "attempting to initialize poll() io engine");
 
+    sockList = (struct Socket**) malloc(sizeof(struct Socket*) * max_conns);
     pollfdList = (struct pollfd*) malloc(sizeof(struct pollfd) * max_conns);
 
-    if (pollfdList == NULL)
+    if ((pollfdList == NULL) || (sockList == NULL))
     {
         log_stderr("core/ioengine/poll", 1,
                    "failed to initialize poll() io engine: unable to allocate memory");
@@ -29,6 +32,7 @@ int ioengine_poll_init(int max_conns)
 
     /* initialize the data */
     for (i = 0; i < max_conns; i++) {
+        sockList[i] = 0;
         pollfdList[i].fd = -1;
         pollfdList[i].events = 0;
         pollfdList[i].revents = 0;
@@ -40,7 +44,20 @@ int ioengine_poll_init(int max_conns)
     return 0;
 }
 
+int ioengine_poll_addsock(struct Socket *sock)
+{
+
+    return 0;
+}
+
+void ioengine_poll_delsock(struct Socket *sock)
+{
+
+}
+
 struct IOEngine ioengine_poll = {
     "poll()",
-    ioengine_poll_init
+    ioengine_poll_init,
+    ioengine_poll_addsock,
+    ioengine_poll_delsock
 };
