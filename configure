@@ -627,7 +627,7 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
-ENGINE_C
+IOENGINE_C
 host_os
 host_vendor
 host_cpu
@@ -4756,7 +4756,7 @@ $as_echo "$as_me: WARNING: Unknown OS type; using generic routines." >&2;}
         ;;
 esac
 
-ENGINE_C='engine_select.$(OBJEXT)'
+IOENGINE_C='ioengine_select.$(OBJEXT)'
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to enable use of poll()" >&5
 $as_echo_n "checking whether to enable use of poll()... " >&6; }
@@ -4785,8 +4785,8 @@ if test x"$x4conf_cv_enable_poll" = xyes; then
 
 $as_echo "#define USE_POLL 1" >>confdefs.h
 
-    ENGINE_POLL='engine_poll.$(OBJEXT)'
-    ENGINE_C="$ENGINE_POLL $ENGINE_C"
+    IOENGINE_POLL='ioengine_poll.$(OBJEXT)'
+    IOENGINE_C="$IOENGINE_POLL $IOENGINE_C"
 fi
 
 

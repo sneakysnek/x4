@@ -1,7 +1,7 @@
 #include <poll.h>
 #include <stdlib.h>
 
-#include "engines.h"
+#include "ioengine.h"
 #include "log.h"
 
 /** Array of poll() active elements. */
@@ -11,18 +11,18 @@ static unsigned int poll_count;
 /** Maximum file descriptor supported, plus one. */
 static unsigned int poll_max;
 
-int engine_poll_init(int max_conns)
+int ioengine_poll_init(int max_conns)
 {
     int i;
 
-    log_stdout("core/engine/poll", 1,
+    log_stdout("core/ioengine/poll", 1,
                "attempting to initialize poll() io engine");
 
     pollfdList = (struct pollfd*) malloc(sizeof(struct pollfd) * max_conns);
 
     if (pollfdList == NULL)
     {
-        log_stderr("core/engine/poll", 1,
+        log_stderr("core/ioengine/poll", 1,
                    "failed to initialize poll() io engine: unable to allocate memory");
         return -1;
     }
@@ -40,7 +40,7 @@ int engine_poll_init(int max_conns)
     return 0;
 }
 
-struct Engine engine_poll = {
+struct IOEngine ioengine_poll = {
     "poll()",
-    engine_poll_init
+    ioengine_poll_init
 };

@@ -2,7 +2,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "engines.h"
+#include "ioengine.h"
 #include "log.h"
 
 /* Maximum file descriptor currently used. */
@@ -12,14 +12,14 @@ static fd_set global_read_set;
 /* Global write event interest bitmap. */
 static fd_set global_write_set;
 
-int engine_select_init(int max_conns)
+int ioengine_select_init(int max_conns)
 {
-    log_stdout("core/engine/select", 1,
+    log_stdout("core/ioengine/select", 1,
                "attempting to initialize select() io engine");
 
     if (max_conns > FD_SETSIZE)
     {
-        log_stderr("core/engine/select", 1,
+        log_stderr("core/ioengine/select", 1,
                    "select() engine cannot handle %d sockets (> %d)",
                    max_conns, FD_SETSIZE);
         return -1;
@@ -33,7 +33,7 @@ int engine_select_init(int max_conns)
     return 0;
 }
 
-struct Engine engine_select = {
+struct IOEngine ioengine_select = {
     "select()",
-    engine_select_init
+    ioengine_select_init
 };

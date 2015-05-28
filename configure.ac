@@ -119,7 +119,7 @@ case "$host" in
         ;;
 esac
 
-ENGINE_C='engine_select.$(OBJEXT)'
+IOENGINE_C='ioengine_select.$(OBJEXT)'
 
 dnl Start with --enable-poll
 AC_MSG_CHECKING([whether to enable use of poll()])
@@ -139,11 +139,11 @@ AC_MSG_RESULT([$x4conf_cv_enable_poll])
 
 if test x"$x4conf_cv_enable_poll" = xyes; then
     AC_DEFINE([USE_POLL], 1, [Specify whether or not to use poll()])
-    ENGINE_POLL='engine_poll.$(OBJEXT)'
-    ENGINE_C="$ENGINE_POLL $ENGINE_C"
+    IOENGINE_POLL='ioengine_poll.$(OBJEXT)'
+    IOENGINE_C="$IOENGINE_POLL $IOENGINE_C"
 fi
 
-AC_SUBST([ENGINE_C])
+AC_SUBST([IOENGINE_C])
 
 dnl --with-maxcon allows us to set the maximum connections
 x4conf_maxcon=`ulimit -Hn`

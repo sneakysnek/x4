@@ -6,7 +6,7 @@
 #include <string.h>
 #include <signal.h>
 #include "config.h"
-#include "engines.h"
+#include "ioengine.h"
 #include "init.h"
 #include "log.h"
 
@@ -30,7 +30,7 @@ void init(int *fork)
         exit(-1);
     }
 
-    if (engines_init(MAXCONNECTIONS) != 0)
+    if (ioengine_init(MAXCONNECTIONS) != 0)
     {
         log_stderr("core/init", 1, "unable to initialize IO engine");
         exit(-1);

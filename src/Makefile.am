@@ -6,17 +6,17 @@ AM_LDFLAGS =
 # the previous manual Makefile
 bin_PROGRAMS = x4
 x4_SOURCES = main.c \
-	engines.c \
+	ioengine.c \
 	init.c \
 	log.c \
 	timers.c
 
-EXTRA_x4_SOURCES = engine_select.c engine_poll.c
+EXTRA_x4_SOURCES = ioengine_select.c ioengine_poll.c
 
-ENGINE_C = @ENGINE_C@
+IOENGINE_C = @IOENGINE_C@
 
-x4_LDADD = $(ENGINE_C)
-x4_DEPENDENCIES = $(ENGINE_C)
+x4_LDADD = $(IOENGINE_C)
+x4_DEPENDENCIES = $(IOENGINE_C)
 
 nodist_x4_SOURCES = version.c
 DISTCLEANFILES = version.c

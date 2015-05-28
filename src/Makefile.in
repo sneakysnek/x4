@@ -92,7 +92,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_x4_OBJECTS = main.$(OBJEXT) engines.$(OBJEXT) init.$(OBJEXT) \
+am_x4_OBJECTS = main.$(OBJEXT) ioengine.$(OBJEXT) init.$(OBJEXT) \
 	log.$(OBJEXT) timers.$(OBJEXT)
 nodist_x4_OBJECTS = version.$(OBJEXT)
 x4_OBJECTS = $(am_x4_OBJECTS) $(nodist_x4_OBJECTS)
@@ -171,7 +171,6 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
-ENGINE_C = @ENGINE_C@
 EXEEXT = @EXEEXT@
 GREP = @GREP@
 INSTALL = @INSTALL@
@@ -179,6 +178,7 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+IOENGINE_C = @IOENGINE_C@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -253,14 +253,15 @@ top_srcdir = @top_srcdir@
 AM_CFLAGS = -I${top_srcdir}/include
 AM_LDFLAGS = 
 x4_SOURCES = main.c \
-	engines.c \
+	ioengine.c \
 	init.c \
 	log.c \
 	timers.c
 
-EXTRA_x4_SOURCES = engine_select.c engine_poll.c
-x4_LDADD = $(ENGINE_C)
-x4_DEPENDENCIES = $(ENGINE_C)
+EXTRA_x4_SOURCES = ioengine_select.c ioengine_poll.c
+IOENGINE_C = @IOENGINE_C@
+x4_LDADD = $(IOENGINE_C)
+x4_DEPENDENCIES = $(IOENGINE_C)
 nodist_x4_SOURCES = version.c
 DISTCLEANFILES = version.c
 all: all-am
@@ -350,10 +351,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/engine_poll.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/engine_select.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/engines.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ioengine_poll.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ioengine_select.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/init.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ioengine.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timers.Po@am__quote@
