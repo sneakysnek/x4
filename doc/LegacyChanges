@@ -18,3 +18,8 @@
 
     Modules - X4 will be designed completely with modules in mind. You will be able to enable and
               disable modules on the fly for ease of use.
+
+    Ban System - The new ban system will replace the legacy 'lamer' system with integrated shared
+                 bans between the IRCd and services. Using the banlist command will show both active
+                 X4 channel bans as well as bans set with /mode +b. (We will be keeping timed ban
+                 support however!)
