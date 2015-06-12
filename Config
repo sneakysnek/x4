@@ -14,11 +14,13 @@ YNREG="^[yn]$"
 INSTALLDIR="${HOME}/x4"
 MAXCONNS=4096
 DEBUGMODE=n
+UPLINK="y"
 
 # Were any of the values changed?
 CHG_INSTALLDIR="n"
 CHG_MAXCONNS="n"
 CHG_DEBUGMODE="n"
+CHG_UPLINK="n"
 
 MAXCONNS=`ulimit -Hn`
 if test x"$MAXCONNS" = xunlimited; then
@@ -65,10 +67,15 @@ build_install() {
 }
 
 ok=0
+clear
 echo ""
 
 ####
 echo "What directory should we use for X4?"
+echo ""
+echo "This is your runtime directory, where your configuration,"
+echo "database, and everything else will be stored."
+
 while [ "${ok}" -eq 0 ] ; do
     echo "[${INSTALLDIR}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
@@ -86,6 +93,12 @@ echo ""
 
 ####
 echo "How many connections should we allow?"
+echo ""
+echo "By default, P10 allows 4096 clients, which is the physical maximum"
+echo "possible. Anything higher than 4096 will automatically be set to"
+echo "this. If your system does not have an ample supply of resources"
+echo "we recommend you lower this to improve performance."
+
 while [ "${ok}" -eq 0 ] ; do
     echo "[${MAXCONNS}] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
@@ -120,6 +133,11 @@ echo ""
 
 ####
 echo "Should we enable debug code in X4?"
+echo ""
+echo "This will cause X4 to output all of it's runtime data in real time via"
+echo "STDOUT. This is really just for developers, so unless you're trying to"
+echo "work out a bug, you really shouldn't use this."
+
 while [ "${ok}" -eq 0 ] ; do
     echo "[n] "
     if read INPUT ; then : ; else echo "" ; exit 1 ; fi
@@ -148,6 +166,44 @@ while [ "${ok}" -eq 0 ] ; do
     fi
 done
 
+ok=0
+echo ""
+
+####
+echo "Should we enable the uplink to evilnet?"
+echo ""
+echo "The uplink will allow the developers to track how many networks"
+echo "run X4 and collect anonymous statistical data as well as notify"
+echo "you when a new version becomes available."
+
+while [ "${ok}" -eq 0 ] ; do
+    echo "[y] "
+    if read INPUT ; then : ; else echo "" ; exit 1 ; fi
+    if [ ! "${INPUT}" ] ; then
+        INPUT=$UPLINK
+        break
+    fi
+
+    if [ "${INPUT}" ] ; then
+        echo "$INPUT" | grep -iq "$YNREG"
+        if [ $? -ne 0 ] ; then
+            echo "Invalid input. Must be yes (y) or no (n)."
+            continue
+        fi
+        if [ \("$INPUT" == "y"\) -o \("$INPUT" == "yes"\) ] ; then
+            continue
+        fi
+        if [ \("$INPUT" == "n"\) -o \("$INPUT" == "no"\) ] ; then
+            continue
+        fi
+        if [ "$INPUT" != "$UPLINK" ] ; then
+            CHG_UPLINK="y"
+            UPLINK="n"
+        fi
+        break
+    fi
+done
+
 ####
 export B_INSTALLDIR $INPUT
 echo ""
@@ -162,6 +218,7 @@ echo ""
 echo "Install Directory: ${INSTALLDIR} (Changed: ${CHG_INSTALLDIR})"
 echo "Max Connections: ${MAXCONNS} (Changed: ${CHG_MAXCONNS})"
 echo "Debug Mode: ${DEBUGMODE} (Changed: ${CHG_DEBUGMODE})"
+echo "Uplink: ${UPLINK} (Changed: ${CHG_UPLINK})"
 echo ""
 echo "Configure stage complete. Please proceed with make to continue your installation."
 
