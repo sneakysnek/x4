@@ -1,5 +1,4 @@
 #  Welcome to X4...
-#  ...the next generation of IRC services
 **X4 is built from the ground up with a brand new core design that is modular based and includes many changes that should be a high point in these fantastic services.**
 
 
