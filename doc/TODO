@@ -1,8 +1,35 @@
-Core:
+This is the current todo list. Feel free to contribute.
 
-1) flexible config parser
-2) module subsystem
-3) logging subsystem
-4) event engine
-5) io loop engine (ties in with event engine)
-6) database subsystem to handle multiple options for database backend support
+
+CORE:
+
+1) Flexible Config Parser
+  It has been decided that the config parser will be able to read the same format as Nefarious2
+  to keep it standardized and simple, with one little change.
+
+  The config parser will support the following:
+    Method A (single line): Block { key = "value"; }
+    Method B (multi-line):
+      Block {
+       key = "value"
+      }
+
+  The semicolon will be optional while using a long format syntax and is NOT required for the
+  final block close. It should however support it incase someone adds it!
+
+  The config parser needs to support all common comment types:
+    // Type one
+    /* Type two */
+    # Type three
+
+  It needs to support non-case sensitive block names and key names. But values must be case
+  sensitive.
+
+
+2) Module Subsystem
+3) Logging Subsystem
+4) Event Engine
+5) IO Loop Engine (ties into the Event Engine)
+6) Database Subsystem
+
+  ** Check doc/core.subsystem for details regarding each section. **
