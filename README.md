@@ -1,22 +1,28 @@
 #  Welcome to X4...
 **X4 is built from the ground up with a brand new core design that is modular based and includes many changes that should be a high point in these fantastic services.**
 
+For more information regarding X4 please view the Github wiki located here: https://github.com/evilnet/x4/wiki
+
 
 ## New features include:
    - A completely new engine for faster and smarter handling of events.
-   - A modular design to handle plug and play module support.
+   - A highly flexible and modular design to handle plug and play support.
    - Multiple password hashing formats.
-   - Multiple IRCd protocol support.
+   - Multiple IRCd support.
    - Database interacting for hardfile, LDAP, MySQL, etc.
    - Built in statistics system.
    - Integration for websites/forums for universal logins.
    - Dynamic command/help listings that show what you have access to.
+   - Indepth IRCd integration for Nefarious 2 features.
+   - Integrated ban sharing between IRCd and X4.
    - Out of date notifications.
+   - Support for various languages..
 
 
 ### TESTING AND DEVELOPMENT:
 In early stages of testing and development, we will be testing X4 on the following operating Linux distributions:
 
+  - CentOS 7
   - CentOS 6
   - Ubuntu 14
   - Ubuntu 15
