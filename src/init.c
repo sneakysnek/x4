@@ -43,6 +43,13 @@ void init(int *fork)
 */
 void init_sig_handler(int signal) {
     /* TODO: remove pid file */
+    int status = remove("x4.pid");
+
+    if (status == 0) {
+        log_stdout("init/pid",1,"Pid deleted successfully");
+    } else {
+        log_stderr("init/pid",1,"Error: unable to delete pid");
+    }
 }
 
 /**
@@ -52,7 +59,7 @@ void init_sig_handler(int signal) {
 void init_createPid()
 {
     FILE *fp = NULL;
-    /* Open a log file in write mode. */
+    /* Open a pid file in write mode. */
     fp = fopen ("x4.pid", "w+");
     fprintf(fp,"%i\n", (int)getpid());
     fflush(fp);
