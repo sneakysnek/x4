@@ -52,7 +52,7 @@ int ioengine_select_addsocket(struct Socket *sock)
     if (sock->fd >= FD_SETSIZE)
     {
         log_stderr("core/ioengine/select", 1,
-                   "attempt to add socket %d (> %d) to io engine",
+                   "attempt to add socket %d (> %d) to io engine select failed",
                    sock->fd, FD_SETSIZE);
         return -1;
     }

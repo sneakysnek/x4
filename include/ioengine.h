@@ -23,9 +23,10 @@ struct IOEngine {
 typedef void (*SockEventCallback)(struct Socket, int);
 
 struct Socket {
-    int fd;
-    int events;
-    SockEventCallback sock_callback;
+    int fd;                          /* socket file descriptor */
+    int events;                      /* IO engine events */
+    int ed;                          /* IO Engine Data */
+    SockEventCallback sock_callback; /* sock callback function */
 };
 
 #endif /* _ioengine_h */
