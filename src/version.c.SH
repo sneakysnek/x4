@@ -22,9 +22,9 @@ else \
 
 if test -f .release
 then
-        cvs_version=`cat .release`
+        vcs_version=`cat .release`
 else
-        cvs_version=`git describe --dirty --long --always`
+        vcs_version=`git describe --dirty --long --always`
 fi
 
 /bin/cat >version.c <<!SUB!THIS!
@@ -32,7 +32,7 @@ fi
 #include "config.h"
 
 const char *generation = "$generation";
-const char *cvs_version = "$cvs_version";
+const char *vcs_version = "$vcs_version";
 const char *creation = "$creation";
 const char *version = PACKAGE_VERSION;
 const char *app_version = PACKAGE_NAME " " PACKAGE_VERSION;

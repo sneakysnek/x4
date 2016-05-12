@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
 {
     int fork = 0; /* We'll default this back to 1 later in development. */
 
-    log_stdout("core/main", 1, "Starting X4 %s+[%s]", version, cvs_version);
+    log_stdout("core/main", 1, "Starting X4 %s+[%s]", version, vcs_version);
 
     if (fork) {
         log_stdout("core/main", 1, "forking");
