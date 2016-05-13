@@ -52,7 +52,7 @@ void init(int *fork)
 
 /**
 * Function deinit
-* Performs any necesary shutdown procedures
+* Performs any necessary shutdown procedures
 */
 void deinit()
 {
