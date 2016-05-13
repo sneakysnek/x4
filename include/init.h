@@ -3,6 +3,7 @@
 #include <sys/types.h>
 
 void init(int *fork);
+void deinit();
 void init_createPid();
 int init_checkPid();
 void init_sig_handler(int sig);

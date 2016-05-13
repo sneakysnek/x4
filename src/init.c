@@ -1,3 +1,4 @@
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -9,6 +10,7 @@
 #include "ioengine.h"
 #include "init.h"
 #include "log.h"
+#include "main.h"
 
 /**
 * Function: init
@@ -16,24 +18,53 @@
 */
 void init(int *fork)
 {
-    log_stdout("core/init", 1, "entering init");
+    log_stdout("core/init", 1, "Entering init");
 
-    signal(SIGKILL, init_sig_handler);
+    /* We cannot add a handler for SIGKILL(9) as it cannot be caught or ignored. */
+    signal(SIGTERM, init_sig_handler);
+    signal(SIGINT, init_sig_handler);
+    signal(SIGHUP, init_sig_handler);
 
-    if (!init_checkPid()) {
+    if (!init_checkPid())
+    {
         pid_t pid = 0;
         if (*fork) {
             init_fork(&pid);
         }
-    } else {
+
+        /* Create pid file */
+        init_createPid();
+    }
+    else
+    {
         log_stderr("core/init", 1, "Error: process already running.\n");
         exit(-1);
     }
 
     if (ioengine_init(MAXCONNECTIONS) != 0)
     {
-        log_stderr("core/init", 1, "unable to initialize IO engine");
+        log_stderr("core/init", 1, "Unable to initialize IO engine");
         exit(-1);
+    }
+
+    log_stdout("core/init", 1, "Initialization complete");
+}
+
+/**
+* Function deinit
+* Performs any necesary shutdown procedures
+*/
+void deinit()
+{
+    int status = remove("x4.pid");
+
+    if (status == 0)
+    {
+        log_stdout("core/init/pid", 1, "Pid deleted successfully");
+    }
+    else
+    {
+        log_stderr("core/init/pid", 1, "Error: unable to delete pid");
     }
 }
 
@@ -42,13 +73,19 @@ void init(int *fork)
 * Called when kill signal is detected. Removes pid file and performs any needed cleanup
 */
 void init_sig_handler(int signal) {
-    /* TODO: remove pid file */
-    int status = remove("x4.pid");
+    log_stdout("core/init/signal", 1, "Received signal %s", strsignal(signal));
 
-    if (status == 0) {
-        log_stdout("init/pid",1,"Pid deleted successfully");
-    } else {
-        log_stderr("init/pid",1,"Error: unable to delete pid");
+    switch (signal)
+    {
+        case SIGINT:
+            x4_shutdown("Received SIGINT signal");
+            break;
+        case SIGTERM:
+            x4_shutdown("Received SIGTERM signal");
+            break;
+        case SIGHUP:
+            /* This is where we reload configuration, etc... */
+            break;
     }
 }
 
@@ -72,9 +109,12 @@ void init_createPid()
 */
 int init_checkPid()
 {
-    if( access( "x4.pid", F_OK ) != -1 ) {
+    if (access( "x4.pid", F_OK ) != -1)
+    {
         return 1;
-    } else {
+    }
+    else
+    {
         return 0;
     }
 }
@@ -121,7 +161,4 @@ void init_fork(pid_t *pid)
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
-
-    /* Create pid file */
-    init_createPid();
 }

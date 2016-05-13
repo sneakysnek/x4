@@ -8,7 +8,7 @@
 * Log messages to stdout
 * @param char * prefix the module prefix
 * @param char * str the message string
-* @param int depth the depth of the message (e.g. INFO, ERROR,FATAL).
+* @param int depth the depth of the message (e.g. INFO, ERROR, FATAL).
 */
 void log_stdout(char *prefix, int depth, char *str, ...) {
     int n = 0;
@@ -20,7 +20,10 @@ void log_stdout(char *prefix, int depth, char *str, ...) {
     va_end(ap);
 
     if (n >= 1)
-        printf("(%s) - %s\n", prefix, line);
+    {
+        fprintf(stdout, "(%s) - %s\n", prefix, line);
+        fflush(stdout);
+    }
 }
 
 /**
@@ -28,7 +31,7 @@ void log_stdout(char *prefix, int depth, char *str, ...) {
 * Log errors to stderr
 * @param char * prefix the module prefix
 * @param char * str the message string
-* @param int depth the depth of the message (e.g. INFO, ERROR,FATAL).
+* @param int depth the depth of the message (e.g. INFO, ERROR, FATAL).
 */
 void log_stderr(char *prefix, int depth, char *str, ...) {
     int n = 0;
@@ -40,7 +43,10 @@ void log_stderr(char *prefix, int depth, char *str, ...) {
     va_end(ap);
 
     if (n >= 1)
+    {
         fprintf(stderr, "(%s) - %s\n", prefix, line);
+        fflush(stdout);
+    }
 }
 
 int logFileCreated = 0;
