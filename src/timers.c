@@ -85,6 +85,7 @@ struct TimerInfo *timer_next()
 {
     struct TimerInfo *ti = NULL;
     struct TimerInfo *ti_next = NULL;
+	time_t now = time(NULL);
 
     for (ti = timers; ti; ti = ti_next)
     {
@@ -93,7 +94,7 @@ struct TimerInfo *timer_next()
 
         ti_next = ti->ti_next;
 
-        if (ti->ti_timestamp <= time(NULL))
+        if (ti->ti_timestamp <= now)
         {
             ti->ti_callback(ti);
             timer_del(ti);
