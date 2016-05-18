@@ -85,7 +85,7 @@ struct TimerInfo *timer_next()
 {
     struct TimerInfo *ti = NULL;
     struct TimerInfo *ti_next = NULL;
-	time_t now = time(NULL);
+    time_t now = time(NULL);
 
     for (ti = timers; ti; ti = ti_next)
     {
